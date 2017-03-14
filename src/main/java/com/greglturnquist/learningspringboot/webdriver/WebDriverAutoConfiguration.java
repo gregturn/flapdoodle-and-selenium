@@ -41,7 +41,7 @@ import static org.openqa.selenium.chrome.ChromeDriverService.*;
 @Configuration
 @ConditionalOnClass(WebDriver.class)
 @EnableConfigurationProperties(WebDriverConfigurationProperties.class)
-@Import({ChromeDriverFactory.class, FirefoxDriverFactory.class, SafariDriverFactory.class})
+@Import({FirefoxDriverFactory.class, SafariDriverFactory.class})
 public class WebDriverAutoConfiguration {
 // end::1[]
 
@@ -56,17 +56,12 @@ public class WebDriverAutoConfiguration {
 	@ConditionalOnMissingBean(WebDriver.class)
 	public WebDriver webDriver(
 		FirefoxDriverFactory firefoxDriverFactory,
-		SafariDriverFactory safariDriverFactory,
-		ChromeDriverFactory chromeDriverFactory) {
+		SafariDriverFactory safariDriverFactory) {
 
 		WebDriver driver = firefoxDriver(firefoxDriverFactory);
 
 		if (driver == null) {
 			driver = safariDriver(safariDriverFactory);
-		}
-
-		if (driver == null) {
-			driver = chromeDriver(chromeDriverFactory);
 		}
 
 		if (driver == null) {
